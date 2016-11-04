@@ -1,1 +1,3 @@
 theme: minima
+markdown: kramdown
+highlighter: rouge
