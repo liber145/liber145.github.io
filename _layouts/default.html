@@ -1,13 +1,20 @@
 <!DOCTYPE html>
-　　<html>
-    　　<head>
-        　　　　<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-        　　　　<title>{{ page.title }}</title>
-        　　</head>
-    　　<body>
+<html>
+  {% include head.html %}
+  <body>
+    <div class="page-content">
+      <div class="container">
+        <div class="three columns">
+          {% include header.html %}
+        </div>
 
-        　　　　{{ content }}
-
-        　　</body>
-    　　</html>
-
+        <div class="nine columns" style="z-index:100;">
+          <div class="wrapper">
+            {{ content }}
+          </div>
+        </div>
+      </div>
+      {% include footer.html %} 
+    </div>
+  </body>
+</html>
