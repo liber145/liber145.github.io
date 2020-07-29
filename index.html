@@ -1,0 +1,1153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-07-29 Wed 08:34 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>强化学习常见算法</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="liyujun" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://liber145.github.io/org-html-themes/styles/bigblow/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://liber145.github.io/org-html-themes/styles/bigblow/css/bigblow.css"/>
+<link rel="stylesheet" type="text/css" href="https://liber145.github.io/org-html-themes/styles/bigblow/css/hideshow.css"/>
+<script type="text/javascript" src="https://liber145.github.io/org-html-themes/styles/bigblow/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="https://liber145.github.io/org-html-themes/styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
+<script type="text/javascript" src="https://liber145.github.io/org-html-themes/styles/bigblow/js/jquery.localscroll-min.js"></script>
+<script type="text/javascript" src="https://liber145.github.io/org-html-themes/styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+<script type="text/javascript" src="https://liber145.github.io/org-html-themes/styles/bigblow/js/jquery.zclip.min.js"></script>
+<script type="text/javascript" src="https://liber145.github.io/org-html-themes/styles/bigblow/js/bigblow.js"></script>
+<script type="text/javascript" src="https://liber145.github.io/org-html-themes/styles/bigblow/js/hideshow.js"></script>
+<script type="text/javascript" src="https://liber145.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script> MathJax = { 
+            loader: { load: ['[tex]/ams', '[tex]/tagFormat'] },
+            tex: {
+                packages: {'[+]': ['ams', 'tagFormat', 'sections']},
+                tags: 'ams',
+                tagFormat: {
+                    number: (n) => n.toString(),
+                },
+                macros: {
+                    R: "{\\mathbb R}",
+                    E: "{\\mathbb E}",
+                    P: "{\\mathcal P}",
+                    bm: ["{\\bf #1}", 1],
+                    norm: ["{\\left\\lVert #1 \\right\\rVert}", 1],
+                }
+            },
+            startup: {
+                ready() {
+                const Configuration = MathJax._.input.tex.Configuration.Configuration;
+                const CommandMap = MathJax._.input.tex.SymbolMap.CommandMap;
+                new CommandMap('sections', {
+                    resetcounter: 'ResetCounter',
+                }, {
+                    ResetCounter(parser, name) {
+                    parser.tags.counter = parser.tags.allCounter = 0;
+                    },
+                });
+                Configuration.create(
+                    'sections', {handler: {macro: ['sections']}}
+                );
+                MathJax.startup.defaultReady();
+                }
+            }
+            }; </script>
+            <script id="MathJax-script " async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"> </script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">强化学习常见算法</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org9af6998">1. 基本设定</a>
+<ul>
+<li><a href="#orgfe89348">1.1. 马尔可夫决策过程</a></li>
+<li><a href="#org185aa58">1.2. 值函数与贝尔曼方程</a></li>
+</ul>
+</li>
+<li><a href="#org3a8a004">2. DQN</a>
+<ul>
+<li><a href="#org6c9730e">2.1. 算法原理</a></li>
+<li><a href="#orgac93dd4">2.2. 算法流程</a></li>
+</ul>
+</li>
+<li><a href="#orgb690be1">3. DDQN</a>
+<ul>
+<li><a href="#orgdc64912">3.1. 算法原理</a></li>
+<li><a href="#org5d87d69">3.2. 算法流程</a></li>
+</ul>
+</li>
+<li><a href="#org97cc547">4. A3C</a>
+<ul>
+<li><a href="#org5b2f361">4.1. 算法原理</a>
+<ul>
+<li><a href="#org5f071d7">4.1.1. 策略梯度定理</a></li>
+<li><a href="#org2e91c6d">4.1.2. 异步架构</a></li>
+</ul>
+</li>
+<li><a href="#org2d50889">4.2. 算法流程</a></li>
+</ul>
+</li>
+<li><a href="#orgd8fd118">5. DDPG</a>
+<ul>
+<li><a href="#orga66059a">5.1. 算法原理</a></li>
+<li><a href="#orgcc81865">5.2. 算法流程</a></li>
+</ul>
+</li>
+<li><a href="#orgbbb9fab">6. TRPO</a>
+<ul>
+<li><a href="#org06ab653">6.1. 算法原理</a>
+<ul>
+<li><a href="#orge90e63e">6.1.1. 朴素的约束优化问题</a></li>
+<li><a href="#orgadef8e2">6.1.2. 近似累积奖励</a></li>
+<li><a href="#org4e53505">6.1.3. TRPO定理</a></li>
+</ul>
+</li>
+<li><a href="#orgc9abbfa">6.2. 算法流程</a></li>
+</ul>
+</li>
+<li><a href="#org43dc1ea">7. PPO</a>
+<ul>
+<li><a href="#org7a24ed7">7.1. 算法原理</a></li>
+<li><a href="#org377b852">7.2. 算法流程</a></li>
+</ul>
+</li>
+<li><a href="#org8022008">8. SAC</a>
+<ul>
+<li><a href="#orgad1ccf4">8.1. 算法原理</a></li>
+<li><a href="#org3b08e3e">8.2. 算法流程</a></li>
+</ul>
+</li>
+<li><a href="#org86ad9c5">9. TD3</a>
+<ul>
+<li><a href="#org74f74db">9.1. 算法原理</a></li>
+<li><a href="#org9cc47b5">9.2. 算法流程</a></li>
+</ul>
+</li>
+<li><a href="#orgbcee368">10. IMPALA</a></li>
+</ul>
+</div>
+</div>
+<p>
+这里简单介绍强化学习算法。
+大量参考<a href="https://lilianweng.github.io/lil-log/2018/04/08/policy-gradient-algorithms.html">lilianweng的博客</a>，建议前往阅读。
+如果觉得这里写的也不错，麻烦<a href="https://github.com/liber145/liber145.github.io">点个赞</a>，支持我继续写下去。
+如果遇到没写清楚的地方，欢迎<a href="https://github.com/liber145/liber145.github.io/issues">前往提问</a>。
+</p>
+
+
+<div id="outline-container-org9af6998" class="outline-2">
+<h2 id="org9af6998"><span class="section-number-2">1</span> 基本设定</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+强化学习是机器学习的一个分支，用于搜索智能体与环境交互的最优策略以最大化长期累积奖励。
+</p>
+</div>
+
+<div id="outline-container-orgfe89348" class="outline-3">
+<h3 id="orgfe89348"><span class="section-number-3">1.1</span> 马尔可夫决策过程</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+强化学习问题一般用马尔可夫决策过程（MDP）表示。 \(M=(S,A,P,r,\rho_0,\gamma)\) ：
+</p>
+<ul class="org-ul">
+<li>\(S\) 表示状态集合；</li>
+<li>\(A\) 表示动作集合；</li>
+<li>\(P\) 表示状态转移概率，\(P(s'|s,a)\) 表示从状态s，动作a转移到s'的概率；</li>
+<li>\(r\) 是奖励函数；</li>
+<li>\(\rho_0\) 表示初始状态分布；</li>
+<li>\(\gamma\) 是折扣系数。</li>
+</ul>
+
+<p>
+强化学习的策略 \(\pi(a \mid s)\) 将状态映射到动作空间上的概率分布。
+智能体与环境交互产生交互轨迹 \(\{s_0, a_0, r_0, s_1, a_1, r_1, ... \}\) ，最优策略最大化累计奖励
+\[
+  J(\pi) = E_{s_0, a_0, r_0, s_1, a_1, r_1, ... \sim \pi} \sum_{i=0}^\infty \gamma^i r_i
+\]
+</p>
+</div>
+</div>
+
+<div id="outline-container-org185aa58" class="outline-3">
+<h3 id="org185aa58"><span class="section-number-3">1.2</span> 值函数与贝尔曼方程</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+值函数用来衡量当前状态/动作下的长期累积奖励。
+值函数有两种形式，
+</p>
+<ul class="org-ul">
+<li>状态值函数</li>
+</ul>
+<p>
+\[
+  V_\pi(s) = E_{s_0=s, a_0, r_0, s_1, a_1, r_1, ... \sim \pi} \sum_{i=0}^\infty \gamma^i r_i 
+\]
+</p>
+<ul class="org-ul">
+<li>状态动作值函数</li>
+</ul>
+<p>
+\[
+  Q_\pi(s, a) = E_{s_0=s, a_0=a, r_0, s_1, a_1, r_1, ... \sim \pi} \sum_{i=0}^\infty \gamma^i r_i 
+\]
+这二者可以互相转换
+</p>
+\begin{align*}
+  & V_\pi(s) = \sum_{a} \pi(a|s) Q_\pi(s, a) \\
+  & Q_\pi(s, a) = r(s, a) + \gamma \sum_{s'} P(s' | s, a) V_\pi(s')
+\end{align*}
+<p>
+二者统称为值函数。
+</p>
+
+
+<p>
+最优策略满足贝尔曼最优方程，
+\[
+  V^*(s) = \max_a r(s, a) + \gamma \sum_{s'} P(s'| s,a) V^*(s') 
+\]
+给定策略 \(\pi\) ，对应的值函数满足贝尔曼期望方程，
+\[
+  V_\pi(s) = \sum_a \pi(a|s) \left[ r(s,a) + \gamma \sum_{s'} P(s' | s,a) V_\pi(s') \right]
+\]
+一个马尔可夫决策过程对应的最优策略可能不是唯一的，但最优值函数是唯一的。
+给定最优值函数，最优策略可以通过贪心法获得 \(\arg\max_a Q(s, a)\) 。
+因此，搜索最优策略可以转化成寻找最优值函数。
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org3a8a004" class="outline-2">
+<h2 id="org3a8a004"><span class="section-number-2">2</span> DQN</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+DQN是强化学习的一个里程碑算法，大幅提高了强化学习的学习能力。
+具体<a href="https://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=&amp;ved=2ahUKEwjF2ai229PqAhWJBIgKHbyyAVYQFjABegQIBBAB&amp;url=https%3A%2F%2Fweb.stanford.edu%2Fclass%2Fpsych209%2FReadings%2FMnihEtAlHassibis15NatureControlDeepRL.pdf&amp;usg=AOvVaw0uqHxqo8Yyn3cmySQWqe8Z">请看文章</a>。
+</p>
+</div>
+
+
+<div id="outline-container-org6c9730e" class="outline-3">
+<h3 id="org6c9730e"><span class="section-number-3">2.1</span> 算法原理</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+DQN使用神经网络参数化值函数 \(Q(s,a; \theta)\) 。
+最优策略对应的贝尔曼方程可以表示为
+\[
+  Q(s, a; \theta^*) = r(s, a) + \gamma \max_{a'} Q(s', a'; \theta^*)
+\]
+对于任意 \((s, a, s')\) 成立。
+</p>
+
+
+<p>
+智能体与环境交互收集很多转移状态 \(\{s_i, a_i, r_i, s_i'\}_{i=1}^n\) 。
+DQN最小化以下目标，
+\[
+  \min_\theta \frac{1}{n} \sum_{i=1}^n ( Q(s, a; \theta) - (r_i + \gamma \max_{a'} Q(s', a'; \theta_{old})) )^2
+\]
+</p>
+
+
+<p>
+DQN主要使用了两个技巧来避免训练不收敛，
+</p>
+<ul class="org-ul">
+<li>经验重放（experience replay）。每次训练从中随机抽取 \(n\) 个训练样本，降低序贯数据之间的相关性。</li>
+<li>延迟目标值函数更新。防止值函数训练过估计（over estimation）。
+目标值函数和优化值函数使用不同参数的原因是Q-learning的想法是动态规划。
+延迟更新的原因是，因为DQN每次随机更新一小部分状态值，不能保证Q-learning中的压缩映射，
+而延迟更新能够从实验上缓解这个问题。请看<a href="https://stackoverflow.com/questions/54237327/why-is-a-target-network-required">这里的讨论</a>。</li>
+</ul>
+
+
+<p>
+DQN能够使用过去所有状态转移组的原因是，最优值函数在非最优状态转移下也具有动态规划性质。
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgac93dd4" class="outline-3">
+<h3 id="orgac93dd4"><span class="section-number-3">2.2</span> 算法流程</h3>
+<div class="outline-text-3" id="text-2-2">
+<div class="algorithm">
+<ol class="org-ol">
+<li>For \(i = 1,2,3, \ldots\)</li>
+<li>&emsp; 智能体与环境交互收集转移状态，存入经验缓存中。</li>
+<li>&emsp; 从经验缓存中随机抽取批大小为 \(B\) 的状态转移集合 \(\{ s_i, a_i, r_i, s_i' \}\) 。</li>
+<li>&emsp; 如果 \(s_i'\) 是终止状态，那么目标状态值 \(y_i = r_i\) ；否则，目标状态值 \(y_i = r_i + \gamma \max_a Q(s_i', a; \theta_{old})\) 。</li>
+<li>&emsp; 通过求解优化问题来更新网络参数 \(\min_\theta \frac{1}{B} \sum_{i=1}^B (Q(s_i, a_i; \theta) - y_i)^2\) 。迭代次数通过实际训练情况调节。</li>
+<li>EndFor</li>
+</ol>
+
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgb690be1" class="outline-2">
+<h2 id="orgb690be1"><span class="section-number-2">3</span> DDQN</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+DDQN（Deep Distributional Q Network）采用分布的角度来研究状态值。
+DQN中的状态值是标量，DDQN采用分布描述状态值，刻画了状态值的不确定性。
+具体<a href="https://arxiv.org/pdf/1707.06887">请看文章</a>。
+</p>
+</div>
+
+<div id="outline-container-orgdc64912" class="outline-3">
+<h3 id="orgdc64912"><span class="section-number-3">3.1</span> 算法原理</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+分布值函数的贝尔曼期望方程如下所示，
+\[
+  Z(s,a) \overset{D}{=} R(s,a) + \gamma P^\pi Z(s,a)
+\]
+其中， \(Z(s,a)\) 表示状态动作对 \((s,a)\) 的状态值的分布，
+\(R(s,a)\) 表示奖励值的分布，
+\(P^\pi Z(s,a)\) 表示状态转移后的分布，
+\(\overset{D}{=}\) 表示分布意义下相等。
+</p>
+
+<div class="note">
+<p>
+从任意一个分布 \(Z_0\) 开始，上面的结果在 Wasserstein metric 下是 \(\gamma\) 压缩映射的。
+</p>
+
+</div>
+
+<p>
+和DQN一样，DDQN采用动态规划的方式计算目标状态值分布，然后最小化当前状态值分布与目标状态值分布之间的差距。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5d87d69" class="outline-3">
+<h3 id="org5d87d69"><span class="section-number-3">3.2</span> 算法流程</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+DDQN使用离散柱状图表示状态值函数的分布。
+假设状态值介于 \(V_\min\) 和 \(V_\max\) ，将 \([V_\min, V_\max]\) 均分成 \(N\) 份，每份都有一个分布概率。
+从状态值分布 \(Z(s,a)\) 出发，得到奖励值 \(r(s,a)\) （从随机变量 \(R(s,a)\) 中采样产生），然后到达下一个状态 \(s'\) 。
+贝尔曼方程表示为，
+</p>
+
+\begin{align}
+  \hat{Z}(s,a)[i] = \text{bin}(r(s,a) + \gamma \max_a Z(s', a; \theta)[i] \mid V_\min, V_\max, n) 
+  \label{eq}
+\end{align}
+
+<p>
+其中， \(\text{bin}(\cdot \mid V_\min, V_\max, n)\) 表示将状态值落在 \(V_\min\) 和 \(V_\max\) 之间的 \(n\) 个桶中。
+具体来说， \(N\) 个值都有一个概率分布，然后新增了一个值 \(r\) ，改变了 \(N\) 值的状态分布。
+\(N\) 个值之间的间隔为 \(\Delta V = (V_\max - V_\min)/N\) 。
+对于每个 \(V_i\) 而言，
+</p>
+<ol class="org-ol">
+<li>计算 \(b = (r + \gamma V_i - V_\min) / \Delta V \in [0, N-1]\) ， \(l = \lfloor b \rfloor\) ， \(u = \lceil b \rceil\) 。</li>
+<li><p>
+更新概率 \(\P_j\) 和 \(\P_{j+1}\) 。初始阶段权重均为零 \(m_j = 0 ~ \forall j\) ，
+</p>
+\begin{align*}
+& m_j     \leftarrow m_j + \P_j \cdot (b - l) \\
+& m_{j+1} \leftarrow m_{j+1} + \P_{j+1} \cdot (u - b)
+\end{align*}</li>
+<li>归一化概率 \(\P_i = m_i / \sum_j m_j\) 。</li>
+</ol>
+
+<p>
+实现过程中 \(Z(s,a)\) 将状态动作 \(s\) 映射到 \(\mathbb{R}^{|\mathcal{A}| \cdot N }\) 的向量。
+</p>
+
+<div class="algorithm">
+<ol class="org-ol">
+<li>For \(i=1,2,3,\ldots\)</li>
+<li>&emsp; 智能体与环境交互，将状态转移组存入经验缓存中。</li>
+<li>&emsp; 从经验缓存中随机抽取批大小为 \(B\) 的状态转移组 \(\{ (s_i, a_i, r_i, s_i') \}_{i=1}^B\) 用于优化模型。</li>
+<li>&emsp; 使用等式 \eqref{eq} 计算目标状态值分布。</li>
+<li>&emsp; 最优化交叉熵损失 \(\sum_i \hat{Z}(s,a)[i] \log Z(s,a; \theta)[i]\) 。</li>
+<li>EndFor</li>
+</ol>
+
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org97cc547" class="outline-2">
+<h2 id="org97cc547"><span class="section-number-2">4</span> A3C</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+A3C（Asynchronous Advantage Actor Critic）是actor-critic算法的一种异步框架，
+能够加速收集采样数据和模型训练。
+<a href="https://arxiv.org/pdf/1602.01783">具体请看文章</a>。
+</p>
+</div>
+
+
+<div id="outline-container-org5b2f361" class="outline-3">
+<h3 id="org5b2f361"><span class="section-number-3">4.1</span> 算法原理</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+A3C算法的核心是基本的actor critic算法，主要用到策略梯度定理（policy gradient theorem）。
+</p>
+</div>
+
+
+<div id="outline-container-org5f071d7" class="outline-4">
+<h4 id="org5f071d7"><span class="section-number-4">4.1.1</span> 策略梯度定理</h4>
+<div class="outline-text-4" id="text-4-1-1">
+<p>
+<b>策略梯度定理</b>  对于随机策略 \(\pi_\theta\) 而言，累积奖励期望
+\(J(\pi_\theta) = \E_{s_0, a_0, r_0, s_1, \ldots \sim \pi_\theta} \sum_{i}^\infty \gamma^i r_i\) 对 \(\theta\) 的导数为
+\[
+  \nabla_\theta J(\pi_\theta) = \E_{s \sim \rho_{\pi_\theta}(s), a \sim \pi_\theta(\cdot | s)} \nabla_\theta \log \pi(a \mid s) \cdot Q_{\pi_\theta}(s, a)
+\]
+其中， \(\rho_{\pi_\theta}(s)\) 表示服从策略 \(\pi_\theta\) 与环境交互的折扣状态分布。
+\(\P(s_0 \to s, k, \pi_\theta)\) 表示服从策略 \(\pi_\theta\) 从 \(s_0\) 出发经过 \(k\) 步之后到达 \(s\) 的概率，
+\(\rho_{\pi_\theta}(s) = \sum_{s_0 \in \mathcal{S}} \P(s_0) \sum_{k=1}^\infty \P(s_0 \to s, k, \pi_\theta)\) 。
+</p>
+
+
+<p>
+遵循这个定理，采用Q-learning的方式来近似估计 \(Q_{\pi_\theta}(s,a)\) ，就是actor critic算法。
+当然，也可以采用蒙特卡洛的方式近似估计。
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org2e91c6d" class="outline-4">
+<h4 id="org2e91c6d"><span class="section-number-4">4.1.2</span> 异步架构</h4>
+<div class="outline-text-4" id="text-4-1-2">
+<p>
+强化学习训练慢的一个原因在于智能体收集交互轨迹很费时间。
+A3C通过异步方式来提升交互性能，改善算法稳定性：
+</p>
+<ol class="org-ol">
+<li>一个策略同时与多个环境交互，</li>
+<li>在不同环境上可以采用不同的探索技巧。</li>
+</ol>
+<p>
+这种异步方式，增加了单位时间的交互次数，可以去掉经验缓存的设计。
+多种不同的探索技巧增强了样本的多样性，避免探索不充足的问题。
+这种异步计算方式不局限于actor critic算法，同样可以用在DQN上。
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org2d50889" class="outline-3">
+<h3 id="org2d50889"><span class="section-number-3">4.2</span> 算法流程</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+分别使用神经网络参数化策略函数 \(\pi_\theta\) 和状态值函数 \(V_\omega\) ，然后迭代求解。
+</p>
+
+
+<div class="algorithm">
+<ol class="org-ol">
+<li>For \(i=1,2,\ldots\)</li>
+<li>&emsp; 同步 \(k\) 个智能体的参数。</li>
+<li>&emsp; 每个智能体与环境交互，收集轨迹。</li>
+<li>&emsp; 根据轨迹，倒序计算累计奖励值。首先计算末尾的奖励值，<br />
+&emsp; \(R = \begin{cases} 0 & \text{如果碰到终止状态} \\ V_\omega(s_T) & \text{如果强行终止} \end{cases}\)</li>
+<li>&emsp; For \(t=T, T-2, \ldots, 1\)</li>
+<li>&emsp; &emsp; \(R \leftarrow r_i + \gamma R\)</li>
+<li>&emsp; &emsp; 累加策略函数的梯度 \(d\theta \leftarrow d\theta + \nabla_\theta \log \pi_\theta(a_i \mid s_i) (R - V_\omega(s_i))\)</li>
+<li>&emsp; &emsp; 累加值函数的梯度 \(d\omega \leftarrow d\omega + \nabla_\omega (R - V_\omega(s_i))^2\)</li>
+<li>&emsp; EndFor</li>
+<li>&emsp; 采用异步更新的方式更新主节点上的参数。</li>
+<li>EndFor</li>
+</ol>
+
+</div>
+
+
+<p>
+异步更新的方式可以参考优化相关的论文，比如Hogwild!
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgd8fd118" class="outline-2">
+<h2 id="orgd8fd118"><span class="section-number-2">5</span> DDPG</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+DDPG（Deep Deterministic Policy Gradient）是一种确定性策略算法。
+A3C这类随机性策略算法通常会假设 \(\pi(a \mid s)\) 服从高斯分布，模型估计均值和方差，方便计算。
+DDPG直接输出确定性动作，更加自由直接。
+具体<a href="https://arxiv.org/pdf/1509.02971">请看文章</a>。
+</p>
+</div>
+
+
+<div id="outline-container-orga66059a" class="outline-3">
+<h3 id="orga66059a"><span class="section-number-3">5.1</span> 算法原理</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+DDPG主要基于确定性策略梯度定理（Deterministic Policy Gradient Theorem）。
+</p>
+
+<p>
+<b>确定性策略梯度定理</b> 确定性策略 \(\mu_\theta\) 的累积奖励期望 
+\(J(\mu_\theta) = \E_{s_0, a_0, r_0, s_1, \ldots \sim \mu_\theta} \sum_{i=1}^\infty \gamma^i r_i\) 
+对 \(\theta\) 的导数为
+\[
+  \nabla_\theta J(\mu_\theta) = \E_{s \sim \rho_{\mu_\theta}} \nabla_\theta \mu_\theta(s) \nabla_a Q(s,a; \pi_\theta)|_{a = \mu_\theta(s)}
+\]
+其中 \(\rho_{\mu_\theta}\) 的定义和随机策略中的定义是一致的。
+\(\P(s_0 \to s, k, \mu_\theta)\) 表示服从策略 \(\mu_\theta\) 从 \(s_0\) 出发经过 \(k\) 步之后到达 \(s\) 的概率，
+\(\rho_{\mu_\theta}(s) = \sum_{s_0 \in \mathcal{S}} \P(s_0) \sum_{k=1}^\infty \P(s_0 \to s, k, \mu_\theta)\) 。
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgcc81865" class="outline-3">
+<h3 id="orgcc81865"><span class="section-number-3">5.2</span> 算法流程</h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+DDPG是一个离轨强化学习算法，使用非当前策略的轨迹来更新参数。
+在离轨情况下，以上策略梯度可以近似表示为
+\[
+  \nabla_\theta J(\mu_\theta) \approx \E_{s \sim \rho} \nabla_\theta \mu_\theta(s) \nabla_a Q(s,a; \pi_\theta)|_{a = \mu_\theta(s)}
+\]
+这里 \(\rho\) 表示另一个策略下的折扣状态分布。
+</p>
+
+
+<p>
+此外，更新参数的时候，DDPG采用软更新（soft update）的方式： \(\theta \leftarrow \alpha \theta_{new} + (1-\alpha) (\theta_{new} - \theta)\) 。
+DDPG通过添加随机扰动的方式增强确定性策略的探索能力，比如添加高斯扰动或者OU随机过程。
+</p>
+
+
+<div class="algorithm">
+<ol class="org-ol">
+<li>For \(j=1,2,\ldots\)</li>
+<li>&emsp; For \(t=1,2,\ldots,T\)</li>
+<li>&emsp; &emsp; 智能体使用带扰动的策略与环境交互，将状态转移组 \((s_t,a_t,r_t,s_{t+1})\) 存入到经验缓存中。</li>
+<li>&emsp; &emsp; 从经验缓存中抽取 \(N\) 个的状态转移组 \((s_i, a_i, r_i, s_i')\)</li>
+<li>&emsp; &emsp; 设置目标状态值， <br />
+&emsp; &emsp; \(\hat{Q} = \begin{cases} r_i & \text{如果} s_i' \text{是终止状态}  \\ r_i + \gamma Q(s_i', \mu(s_i'; \omega) & \text{如果不是终止状态} \end{cases}\)</li>
+<li>&emsp; &emsp; 更新值函数参数 \(\min_\omega \frac{1}{N} \sum_{i=1}^N (\hat{Q} - Q(s_i, a_i; \omega))^2\) 。</li>
+<li>&emsp; &emsp; 计算策略函数梯度 \(\nabla_\theta J \approx \frac{1}{N} \sum_i \nabla_a Q(s, a=\mu_\theta(s)) \nabla_\theta \mu_\theta(s)\) 。</li>
+<li>&emsp; &emsp; 更新参数， \(\theta \leftarrow \alpha \theta_{new} + (1-\alpha) \theta\) ， \(\omega \leftarrow \alpha \omega_{new} + (1-\alpha) \omega\) 。</li>
+<li>&emsp; EndFor</li>
+<li>EndFor</li>
+</ol>
+
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgbbb9fab" class="outline-2">
+<h2 id="orgbbb9fab"><span class="section-number-2">6</span> TRPO</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+TRPO（Trust Region Policy Optimization）使用置信域约束策略更新时策略的变化。
+这个方法最大的特色在于它的理论分析能够保证它持续改进策略性能。
+具体<a href="https://arxiv.org/pdf/1502.05477">请看文章</a>。
+</p>
+</div>
+
+
+<div id="outline-container-org06ab653" class="outline-3">
+<h3 id="org06ab653"><span class="section-number-3">6.1</span> 算法原理</h3>
+<div class="outline-text-3" id="text-6-1">
+</div>
+<div id="outline-container-orge90e63e" class="outline-4">
+<h4 id="orge90e63e"><span class="section-number-4">6.1.1</span> 朴素的约束优化问题</h4>
+<div class="outline-text-4" id="text-6-1-1">
+<p>
+策略优化问题添加策略变化约束，可以得到以下优化目标
+</p>
+\begin{align*}
+  & \max_\theta J(\pi_\theta) \\ 
+  & s.t. ~ \E_{s \sim \rho_{\pi_{old}}} KL(\pi_{old}(\cdot \mid s) \| \pi_\theta(\cdot \mid s)) \leq \delta
+\end{align*}
+<p>
+我们可以根据策略梯度定理对优化目标进行泰勒展开一阶近似，对策略约束进行二阶近似，进而求解近似后的优化问题。
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgadef8e2" class="outline-4">
+<h4 id="orgadef8e2"><span class="section-number-4">6.1.2</span> 近似累积奖励</h4>
+<div class="outline-text-4" id="text-6-1-2">
+<p>
+不过，这种优化目标不方便进行理论分析。
+TRPO建立新旧策略的累计奖励之间的关系，
+\[
+  J(\tilde{\pi}) = J(\pi) + \sum_{s} \rho_{\tilde{\pi}}(s) \sum_a \tilde{\pi}(a \mid s) A_\pi(s, a)
+\]
+这里等式右边的折扣状态分布 \(\rho_{\tilde{\pi}}(s)\) 替换成旧策略的分布 \(\rho_{\pi}(s)\) 会更方便计算。
+因此， \(\tilde{\pi}\) 的近似累积奖励如下，
+\[
+  L_\pi(\tilde{\pi}) = J(\pi) + \sum_{s} \rho_{\pi}(s) \sum_a \tilde{\pi}(a \mid s) A_\pi(s, a)
+\]
+这个近似累积奖励满足 \(L_\pi(\pi) = J(\pi)\) 。
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org4e53505" class="outline-4">
+<h4 id="org4e53505"><span class="section-number-4">6.1.3</span> TRPO定理</h4>
+<div class="outline-text-4" id="text-6-1-3">
+<p>
+<b>TRPO定理</b> 让 \(\alpha = D_{TV}^\max(\pi_{old}, \pi_{new})\) ，以下边界成立，
+\[
+  J(\pi_{new}) \geq L_{\pi_{old}}(\pi_{new}) - \frac{4 \epsilon \gamma}{ (1-\gamma)^2 } \alpha^2
+\]
+其中 \(\epsilon = \max_{s,a} | A(s,a) |\) 。
+</p>
+
+<p>
+令 \(M_{\pi_{old}}(\pi_{new}) = L_{\pi_{old}}(\pi_{new}) - \frac{4 \epsilon \gamma}{ (1-\gamma)^2 } \alpha^2\) ，
+于是我们可以得到，
+</p>
+\begin{align*}
+  J(\pi_{new}) & \geq M_{\pi_{old}}(\pi_{new}) \\
+  J(\pi_{old}) & \geq M_{\pi_{old}}(\pi_{old}) \\
+  J(\pi_{new}) - J(\pi_{old}) & \geq M_{\pi_{old}}(\pi_{new}) - M_{\pi_{old}}(\pi_{old})
+\end{align*}
+<p>
+因此，我们可以通过最大化 \(M_{\pi_{old}}(\pi_{new})\) 来得到更好的策略。
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgc9abbfa" class="outline-3">
+<h3 id="orgc9abbfa"><span class="section-number-3">6.2</span> 算法流程</h3>
+<div class="outline-text-3" id="text-6-2">
+<p>
+根据TRPO定理，为了方便计算，将状态动作空间下的最大化约束换成平均约束，
+</p>
+\begin{equation}
+\label{eq:trpo}
+\begin{aligned} 
+  \resetcounter
+  & \max_\theta L_{\pi_{old}} (\pi_\theta) \\
+  & s.t. ~ \E_{s \sim \rho_{\pi_{old}}} KL(\pi_{old}(\cdot \mid s) \| \pi_\theta(\cdot \mid s)) \leq \delta
+\end{aligned}
+\end{equation}
+<p>
+这里的优化问题和开头的优化问题几乎是一样的。
+我们在实际求解开头的优化问题时，会将优化目标近似处理成 \(L_{\pi_{old}} (\pi_\theta)\) 的形式。
+</p>
+
+
+<div class="algorithm">
+<ol class="org-ol">
+<li>For \(i=1,2,\ldots\)</li>
+<li>&emsp; 智能体与环境交互收集轨迹。</li>
+<li>&emsp; 通过求解以上近似优化问题 \eqref{eq:trpo} 更新策略参数。</li>
+<li>EndFor</li>
+</ol>
+
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org43dc1ea" class="outline-2">
+<h2 id="org43dc1ea"><span class="section-number-2">7</span> PPO</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+PPO（Proximal Policy Optimization）简化了TRPO中的计算过程。
+PPO通过约束新旧策略的比值来限制算法的更新。
+具体<a href="https://arxiv.org/pdf/1707.06347">请看文章</a>。
+</p>
+</div>
+
+
+<div id="outline-container-org7a24ed7" class="outline-3">
+<h3 id="org7a24ed7"><span class="section-number-3">7.1</span> 算法原理</h3>
+<div class="outline-text-3" id="text-7-1">
+<p>
+TRPO使用KL散度约束策略变化，求解的优化问题如下，
+</p>
+\begin{align*}
+  & \max_\theta \E_{t} \frac{\pi_\theta(a_t \mid s_t)}{\pi_{old}(a_t \mid s_t)} A(s_t, a_t) \\
+  & s.t. ~ \E_{s_t \sim \rho_{\pi_{old}}} KL(\pi_{old}(\cdot \mid s_t) \| \pi_\theta(\cdot \mid s_t)) \leq \delta
+\end{align*}
+
+
+<p>
+以上约束优化问题不太容易求解。PPO通过截断比值的方式来简化优化问题， \(\resetcounter\)
+</p>
+\begin{align}
+  \max_\theta ~ \E_{t} \left[ \min( r_t A_t, \text{clip}(r_t, 1-\epsilon, 1+\epsilon) A_t) \right]
+  \label{eq:ppo}
+\end{align}
+<p>
+其中 \(r_t = \pi_\theta(a_t \mid s_t) / \pi_{old}(a_t \mid s_t)\) 。
+clip 操作限制策略比值的变化范围。
+假设 \(A_t > 0\) ，那么
+</p>
+\begin{align*}
+  \min( r_t A_t, \text{clip}(r_t, 1-\epsilon, 1+\epsilon) A_t) =
+  \begin{cases}
+    (1 + \epsilon) A_t  &  r_t > 1 + \epsilon \\
+    r_t A_t             &  r_t <= 1 + \epsilon
+  \end{cases}
+\end{align*}
+<p>
+\(r_t\) 中蕴含参数 \(\theta\) ， \(A_t\) 不含参数 \(\theta\) 。
+因此，当 \(r_t > 1 + \epsilon\) 时，上式对 \(\theta\) 的导数为零。
+PPO过滤了 \(r_t > 1 + \epsilon\) 的训练样本。
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org377b852" class="outline-3">
+<h3 id="org377b852"><span class="section-number-3">7.2</span> 算法流程</h3>
+<div class="outline-text-3" id="text-7-2">
+<p>
+PPO和TRPO都是同轨算法。
+PPOd的计算流程和TRPO保持一致，除了求解的优化目标不一样。
+</p>
+
+
+<div class="algorithm">
+<ol class="org-ol">
+<li>For \(i=1,2,\ldots\)</li>
+<li>&emsp; 智能体与环境交互收集轨迹。</li>
+<li>&emsp; 求解优化问题 \eqref{eq:ppo} 来迭代更新策略参数。</li>
+<li>EndFor</li>
+</ol>
+
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org8022008" class="outline-2">
+<h2 id="org8022008"><span class="section-number-2">8</span> SAC</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+SAC (Soft Actor Critic）通过添加信息熵来鼓励策略探索。
+具体<a href="https://arxiv.org/pdf/1801.01290">请看文章</a>。
+</p>
+</div>
+
+
+<div id="outline-container-orgad1ccf4" class="outline-3">
+<h3 id="orgad1ccf4"><span class="section-number-3">8.1</span> 算法原理</h3>
+<div class="outline-text-3" id="text-8-1">
+<p>
+SAC 将信息熵加到奖励函数中，优化以下目标
+\[
+  \max_\pi J(\pi) = \sum_{t=0}^T \E_{(s_t,a_t) \sim \rho_\pi} [ \gamma^t r(s_t, a_t) + \alpha H(\pi(\cdot \mid s_t)) ]
+\]
+其中 \(H(\P(\cdot)) = - \sum_x \P(x) \log \P(x)\) 。
+</p>
+
+
+<p>
+奖励函数被修改之后，相应的贝尔曼方程和值函数也发生了变化，
+</p>
+\begin{align*}
+  & T^\pi Q(s_t, a_t) \triangleq r(s_t, a_t) + \gamma \E_{s_{t+1} \sim P} V(s_{t+1}) \\
+  & V(s_t) = \E_{a_t \sim \pi} [Q(s_t, a_t) - \log \pi(a_t \mid s_t)]
+\end{align*}
+<p>
+因此，全部由状态值函数构成的贝尔曼方程可以表示如下
+\[
+  T^\pi Q(s_t, a_t) = r(s_t, a_t) + \gamma \E_{s_{t+1} \sim P, a_{t+1} \sim \pi} Q(s_{t+1}, a_{t+1}) + \alpha \E_{s_{t+1} \sim P} H(\pi(\cdot \mid s_{t+1}))
+\]
+容易看出在奖励函数中添加了鼓励探索的信息熵。
+</p>
+
+
+<p>
+SAC的理论分析是在上面的值函数动态规划下进行的。
+将策略表示为值函数的指数形式，
+使用KL散度距离投影到高斯概率空间，
+\[
+  \pi_{new} = \underset{\pi' \in \Pi}{\arg\min} KL \left( \pi'(\cdot \mid s_t) \| \frac{\exp(Q_{\pi_{old}}(s_t, \cdot))}{Z_{\pi_{old}}(s_t)} \right)
+\]
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org3b08e3e" class="outline-3">
+<h3 id="org3b08e3e"><span class="section-number-3">8.2</span> 算法流程</h3>
+<div class="outline-text-3" id="text-8-2">
+<div class="algorithm">
+<ol class="org-ol">
+<li>For \(i=1,2,\ldots\)</li>
+<li>&emsp; 智能体与环境交互收集轨迹。</li>
+<li>&emsp; 通过最小化值函数残差来更新值函数参数， <br />
+&emsp; \(\min_\omega \frac{1}{2}(V_\omega(s_t) - \E_{a_t \sim \pi} [ r(s_t, a_t) + V_\omega(s_t) - \log \pi_\theta(a_t \mid s_t) ])^2\)</li>
+<li>&emsp; 通过最小化策略与值函数导出的策略来更新策略参数， <br />
+&emsp; \(\min_\theta \E_{s_t \sim D} KL \left( \pi_\theta(\cdot \mid s_t) \| \frac{\exp(Q_\omega(s_t, \cdot))}{Z_\omega(s_t)} \right)\)</li>
+<li>EndFor</li>
+</ol>
+
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org86ad9c5" class="outline-2">
+<h2 id="org86ad9c5"><span class="section-number-2">9</span> TD3</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+TD3（Twin Delayed Deep Deterministic policy gradient）使用两个值函数来缓解值函数过估计的问题。
+具体<a href="https://arxiv.org/pdf/1802.09477">请看文章</a>。
+</p>
+</div>
+
+
+<div id="outline-container-org74f74db" class="outline-3">
+<h3 id="org74f74db"><span class="section-number-3">9.1</span> 算法原理</h3>
+<div class="outline-text-3" id="text-9-1">
+<p>
+值函数一般基于贝尔曼方程采用动态规划的方式进行更新，
+\[
+  Q(s_t, a_t; \omega) = r(s_t, a_t) + \gamma \max_a Q(s_{t+1}, a; \omega)
+\]
+实验中发现，这种方式估计的值函数是不准的，一般大于真实值。
+</p>
+
+
+<p>
+TD3使用两个值函数来进行值函数估计，值函数目标设为二者之间的较小值，
+\[
+  Q(s_t, a_t; \omega) = r_t + \gamma \min ( Q(s_{t+1}, \pi_1(s_{t+1}); \omega_1), Q(s_{t+1}, \pi_1(s_{t+1}); \omega_2) )
+\]
+这里的动作不是贪心动作。
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org9cc47b5" class="outline-3">
+<h3 id="org9cc47b5"><span class="section-number-3">9.2</span> 算法流程</h3>
+<div class="outline-text-3" id="text-9-2">
+<p>
+实际计算中，TD3会对策略给出的动作添加扰动，加大随机力度，缓解过估计。
+</p>
+
+<div class="algorithm">
+<ol class="org-ol">
+<li>For \(i=1,2,\ldots\)</li>
+<li>&emsp; 智能体使用带扰动的策略与环境交互，收集轨迹。</li>
+<li>&emsp; 随机抽取 \(N\) 个样本 \((s,a,r,s')\)  <br />
+&emsp; \(\tilde{a} = \pi(s'; \theta') + \text{clip}(\mathcal{N}(0, \tilde{\sigma}), -c, c)\) <br />
+&emsp; \(y = r + \gamma \min_{i=1,2} Q(s', a_i; \omega_i')\) <br />
+&emsp; \(\omega_i = \arg\min_{\omega_i} \frac{1}{N} \sum (y - Q(s, a; \omega_i))^2\)</li>
+<li>&emsp; If \(i ~ \text{mod} ~ d\)</li>
+<li>&emsp; &emsp; 更新策略参数， <br />
+&emsp; &emsp; \(\nabla_\theta J(\theta) = \frac{1}{N} \sum \nabla_a Q_{\theta_1}(s,a)|_{a= \pi_\theta(s)}  \nabla_\theta \pi_\theta(s)\)</li>
+<li>&emsp; &emsp; 更新值函数参数， <br />
+&emsp; &emsp; \(\theta_i' \leftarrow \tau \theta_i + (1-\tau) \theta_i'\) <br />
+&emsp; &emsp; \(\omega' \leftarrow \tau \omega + (1-\omega) \omega'\)</li>
+<li>&emsp; EndIf</li>
+<li>EndFor</li>
+</ol>
+
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgbcee368" class="outline-2">
+<h2 id="orgbcee368"><span class="section-number-2">10</span> IMPALA</h2>
+<div class="outline-text-2" id="text-10">
+<p>
+IMPALA（Importance Weighted Actor-Learner Architecture）提供了一套并行框架，并修正离轨策略估计不准的问题。
+具体<a href="https://arxiv.org/pdf/1802.01561">请看文章</a>。
+</p>
+
+
+<p>
+大部分并行强化学习算法的策略参数都是同步更新的，并行在环境交互层面。
+IMPALA 异步更新策略。
+计算节点分为 Actor，Learner。Actor 接收 Learner 的最新策略，与环境交互，将轨迹传递给 Learner；Learner接收轨迹，更新策略。
+</p>
+
+
+<p>
+IMPALA 使用 \(n\) 步的 V-trace 来修正 off-policy 的值函数估计，
+</p>
+\begin{align*}
+v_s = V(x_s) + \sum_{t=s}^{s+n-1} \gamma^{t-s} ( \prod_{i=s}^{t-1} c_i ) \delta_t V
+\end{align*}
+<p>
+其中，\(\delta_t V = \rho_t (r_t + \gamma V(x_{t+1}) - V(x_t))\)，\( \rho_t = \min( \bar{\rho}, \frac{\pi( a_t |x_t)}{\mu(a_t|x_t)}) \)，\( c_i = \min( \bar{c}, \frac{\pi(a_i|x_i)}{\mu(a_i|x_i)} ) \)
+</p>
+
+
+<p>
+当 \(c_i=1\) ， \(\rho_t=1\) 时，
+</p>
+\begin{align*}
+v_s &= V(x_s) + \sum_{t=s}^{s+n-1} \gamma^{t-s} (r_t + \gamma V(x_{t+1}) - V(x_t)) \\
+&= \sum_{t=s}^{s+n-1} \gamma^{t-s} r_t + \gamma^n V(x_{s+n})
+\end{align*}
+<p>
+这便是 \(n\) 步的贝尔曼目标。
+</p>
+</div>
+</div>
+</div>
+</body>
+</html>
